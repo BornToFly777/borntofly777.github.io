@@ -54,7 +54,7 @@ var tslint = {
         "no-access-missing-member": true,
         "invoke-injectable": true
     }
-}
+};
 
 module.exports = {
     entry: './SRC/scripts.ts',
@@ -88,4 +88,4 @@ module.exports = {
     },
 
     tslint: tslint
-}
+};
