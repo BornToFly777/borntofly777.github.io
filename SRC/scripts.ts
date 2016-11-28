@@ -1,6 +1,7 @@
 let loadGoogleMapsAPI = require('load-google-maps-api');
 
-const API_WEATHER_KEY = 'f9ddf31de1f2a7aafa162e68b9ffc586';
+const API_WEATHER_KEY = 'f9ddf31de1f2a7aafa162e68b9ffc586',
+	API_GOOGLE_MAPS_KEY = 'AIzaSyBDOTuEovqWOhDmy2ClQvwXXMni-NLHUwI';
 
 class MainWeather {
 	public temp:string;
@@ -30,7 +31,7 @@ let show_map = (position:Position) => {
 
 	weatherData = loadWeather(URL);
 
-	loadGoogleMapsAPI.default().then((googleMaps) => {
+	loadGoogleMapsAPI.default([{key: API_GOOGLE_MAPS_KEY}]).then((googleMaps) => {
 		let map = new googleMaps.Map(document.getElementById('map'), {
 			zoom: 8,
 			center: {

@@ -45,7 +45,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var loadGoogleMapsAPI = __webpack_require__(1);
-	var API_WEATHER_KEY = 'f9ddf31de1f2a7aafa162e68b9ffc586';
+	var API_WEATHER_KEY = 'f9ddf31de1f2a7aafa162e68b9ffc586', API_GOOGLE_MAPS_KEY = 'AIzaSyBDOTuEovqWOhDmy2ClQvwXXMni-NLHUwI';
 	var MainWeather = (function () {
 	    function MainWeather() {
 	    }
@@ -69,7 +69,7 @@
 	    var URL = 'http://api.openweathermap.org/data/2.5/find?lat=' + latitude + '&lon=' + longitude + '&cnt=10&appid=' + API_WEATHER_KEY;
 	    var docFragment = document.createDocumentFragment();
 	    weatherData = loadWeather(URL);
-	    loadGoogleMapsAPI.default().then(function (googleMaps) {
+	    loadGoogleMapsAPI.default([{ key: API_GOOGLE_MAPS_KEY }]).then(function (googleMaps) {
 	        var map = new googleMaps.Map(document.getElementById('map'), {
 	            zoom: 8,
 	            center: {
