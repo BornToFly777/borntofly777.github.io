@@ -17,7 +17,7 @@
   		let latitude: number = position.coords.latitude,
   		longitude: number = position.coords.longitude;
 
-		let URL: string = 'http://api.openweathermap.org/data/2.5/find?lat=' + latitude + '&lon=' + longitude + '&cnt=100&appid=f9ddf31de1f2a7aafa162e68b9ffc586';
+		let URL: string = 'https://api.openweathermap.org/data/2.5/find?lat=' + latitude + '&lon=' + longitude + '&cnt=100&appid=f9ddf31de1f2a7aafa162e68b9ffc586';
 
 		let data: LoadData = new LoadData(URL),
 			docFragment: DocumentFragment = document.createDocumentFragment();
