@@ -59,7 +59,7 @@
 	    }());
 	    var show_map = function (position) {
 	        var latitude = position.coords.latitude, longitude = position.coords.longitude;
-	        var URL = 'http://api.openweathermap.org/data/2.5/find?lat=' + latitude + '&lon=' + longitude + '&cnt=10&appid=f9ddf31de1f2a7aafa162e68b9ffc586';
+	        var URL = 'http://api.openweathermap.org/data/2.5/find?lat=' + latitude + '&lon=' + longitude + '&cnt=100&appid=f9ddf31de1f2a7aafa162e68b9ffc586';
 	        var data = new LoadData(URL), docFragment = document.createDocumentFragment();
 	        data.loadWeather
 	            .then(function (data) {
