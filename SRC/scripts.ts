@@ -1,7 +1,4 @@
-let loadGoogleMapsAPI = require('load-google-maps-api');
-
-const API_WEATHER_KEY = 'f9ddf31de1f2a7aafa162e68b9ffc586',
-	API_GOOGLE_MAPS_KEY = 'AIzaSyBDOTuEovqWOhDmy2ClQvwXXMni-NLHUwI';
+const API_WEATHER_KEY = 'f9ddf31de1f2a7aafa162e68b9ffc586';
 
 class MainWeather {
 	public temp:string;
