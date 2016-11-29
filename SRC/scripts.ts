@@ -31,26 +31,20 @@ let show_map = (position:Position) => {
 
 	weatherData = loadWeather(URL);
 
-	loadGoogleMapsAPI.default({key: API_GOOGLE_MAPS_KEY}).then((googleMaps) => {
-		let map = new googleMaps.Map(document.getElementById('map'), {
-			zoom: 8,
-			center: {
-				lat: latitude,
-				lng: longitude
-			}
-		});
+	let map = new google.maps.Map(document.getElementById('map'), {
+		zoom: 8,
+		center: {
+			lat: latitude,
+			lng: longitude
+		}
+	});
 
-		new googleMaps.Marker({
-			position: {
-				lat: latitude,
-				lng: longitude
-			},
-			map: map
-		});
-	}).catch((err) => {
-		let p:HTMLElement = document.createElement('p');
-		p.innerHTML = 'Error: ' + err.message;
-		document.getElementById('map').appendChild(p);
+	new google.maps.Marker({
+		position: {
+			lat: latitude,
+			lng: longitude
+		},
+		map: map
 	});
 
 	weatherData

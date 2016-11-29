@@ -65,7 +65,7 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['', '.js', '.ts']
+        extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
     },
 
     devtool: 'source-map', 
@@ -73,9 +73,8 @@ module.exports = {
     module: {
     	loaders: [
             {
-        		test: /\.ts$/,
-        		exclude: /\/node_modules\//,
-        		loader: 'ts'
+        		test: /\.tsx?$/,
+        		loader: 'ts-loader'
       		}
         ],
 
@@ -85,7 +84,5 @@ module.exports = {
                 loader: "source-map-loader" 
             }
         ]
-    },
-
-    tslint: tslint
+    }
 };

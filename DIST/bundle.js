@@ -69,25 +69,19 @@
 	    var URL = 'http://api.openweathermap.org/data/2.5/find?lat=' + latitude + '&lon=' + longitude + '&cnt=10&appid=' + API_WEATHER_KEY;
 	    var docFragment = document.createDocumentFragment();
 	    weatherData = loadWeather(URL);
-	    loadGoogleMapsAPI.default({ key: API_GOOGLE_MAPS_KEY }).then(function (googleMaps) {
-	        var map = new googleMaps.Map(document.getElementById('map'), {
-	            zoom: 8,
-	            center: {
-	                lat: latitude,
-	                lng: longitude
-	            }
-	        });
-	        new googleMaps.Marker({
-	            position: {
-	                lat: latitude,
-	                lng: longitude
-	            },
-	            map: map
-	        });
-	    }).catch(function (err) {
-	        var p = document.createElement('p');
-	        p.innerHTML = 'Error: ' + err.message;
-	        document.getElementById('map').appendChild(p);
+	    var map = new google.maps.Map(document.getElementById('map'), {
+	        zoom: 8,
+	        center: {
+	            lat: latitude,
+	            lng: longitude
+	        }
+	    });
+	    new google.maps.Marker({
+	        position: {
+	            lat: latitude,
+	            lng: longitude
+	        },
+	        map: map
 	    });
 	    weatherData
 	        .then(function (data) {
