@@ -8,7 +8,7 @@ import { City } from './../city.model';
 	styleUrls: ['./city-list.component.css']
 })
 export class CityListComponent implements OnInit {
-	cityList: Array<City>;
+	cityListPromise: Promise<Array<City>>;
 
 	constructor() { }
 
@@ -37,12 +37,7 @@ export class CityListComponent implements OnInit {
 			let URL:string = 'http://api.openweathermap.org/data/2.5/find?lat=' + latitude + '&lon=' + longitude + 
 				'&cnt=10&appid=' + API_WEATHER_KEY;
 
-			let weatherData:Promise<Array<City>> = loadWeather(URL);
-
-			weatherData
-				.then(data => {
-					vm.cityList = data;
-				});
+			vm.cityListPromise = loadWeather(URL);
 		};
 		navigator.geolocation.getCurrentPosition(getMyPosition);
 	}

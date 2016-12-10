@@ -1,4 +1,4 @@
 <app-city-weather
-	*ngFor="let city of cityList"
+	*ngFor="let city of cityListPromise | async"
 	[cityWeather]="city">
 </app-city-weather>
