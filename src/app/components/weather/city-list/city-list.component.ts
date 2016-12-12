@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { City } from './../city.model';
+import { Coords } from './../coords.model';
 
 @Component({
 	selector: 'app-city-list',
@@ -9,6 +10,7 @@ import { City } from './../city.model';
 })
 export class CityListComponent implements OnInit {
 	cityListPromise: Promise<Array<City>>;
+	coords: Coords;
 
 	constructor() { }
 
@@ -16,9 +18,6 @@ export class CityListComponent implements OnInit {
 		const API_WEATHER_KEY = 'f9ddf31de1f2a7aafa162e68b9ffc586';
 
 		let vm = this;
-
-		let latitude:number,
-			longitude:number;
 
 		// todo move to service
 		let loadWeather = (url:string):Promise<Array<City>> => {
@@ -31,11 +30,13 @@ export class CityListComponent implements OnInit {
 		};
 
 		let getMyPosition = (position:Position) => {
-			latitude = position.coords.latitude,
-			longitude = position.coords.longitude;
+			vm.coords = {
+				lat: position.coords.latitude,
+				lon: position.coords.longitude
+			}
 
-			let URL:string = 'http://api.openweathermap.org/data/2.5/find?lat=' + latitude + '&lon=' + longitude + 
-				'&cnt=10&appid=' + API_WEATHER_KEY;
+			let URL:string = 'http://api.openweathermap.org/data/2.5/find?lat=' + vm.coords.lat + '&lon=' +
+				vm.coords.lon + '&cnt=10&appid=' + API_WEATHER_KEY;
 
 			vm.cityListPromise = loadWeather(URL);
 		};
