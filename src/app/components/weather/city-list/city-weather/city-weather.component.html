@@ -1,4 +1,7 @@
-<div>
-	<h3>{{cityWeather.name}}</h3>
-	<p>{{cityWeather.main.temp | temperatureConverter}}</p>
+<div class="row">
+	<div class="col-md-2">{{cityWeather.name | uppercase}}</div>
+	<div class="col-md-3">
+		(lat: {{cityWeather.coord.lat | number : '.6-6'}}, lon:{{cityWeather.coord.lon | number : '.6-6'}})
+	</div>
+	<div class="col-md-1">{{cityWeather.main.temp | temperatureConverter | number : '.2-2'}}&#176;C</div>
 </div>
