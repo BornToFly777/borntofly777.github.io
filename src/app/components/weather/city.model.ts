@@ -8,4 +8,6 @@ export class City {
 	public name:string;
 	public main:MainWeather;
 	public coord:Coords;
+	public favourite:boolean;
+	public id:number;
 }

@@ -4,7 +4,9 @@
 </div>
 <div class="container-fluid">
 	<app-city-weather
-		*ngFor="let city of cityListPromise | async"
-		[cityWeather]="city">
+		*ngFor="let city of cityList; let i=index"
+		[cityWeather]="city"
+		(markFavouriteCity)="onFavourite($event, i)"
+		(deleteCurrentCity)="onDeleteCity($event, i)">
 	</app-city-weather>
 </div>
