@@ -12,6 +12,9 @@
 	</div>
 	<div class="col-md-1">{{cityWeather.main.temp | temperatureConverter | number : '.2-2'}}&#176;C</div>
 	<div class="col-md-1">
+		<app-show-icon [weatherDescription]="cityWeather.weather[0]"></app-show-icon>
+	</div>
+	<div class="col-md-1">
 		<app-show-wind [wind]="cityWeather.wind"></app-show-wind>
 	</div>
 </div>

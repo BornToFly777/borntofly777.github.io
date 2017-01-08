@@ -8,6 +8,7 @@ import { WeatherPipe } from './pipes/weather.pipe';
 import { PaintCityDirective } from './directives/paint-city/paint-city.directive';
 import { ShowWindComponent } from './city-list/show-wind/show-wind.component';
 import { ArrowDirectionDirective } from './directives/arrow-direction/arrow-direction.directive';
+import { ShowIconComponent } from './city-list/show-icon/show-icon.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ArrowDirectionDirective } from './directives/arrow-direction/arrow-dire
     WeatherPipe,
     PaintCityDirective,
     ShowWindComponent,
-    ArrowDirectionDirective
+    ArrowDirectionDirective,
+    ShowIconComponent
   ],
   imports: [
     CommonModule
