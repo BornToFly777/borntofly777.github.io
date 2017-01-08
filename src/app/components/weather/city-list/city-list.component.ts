@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
+import * as _ from 'lodash';
+
 import { City } from './../city.model';
 import { Coords } from './../coords.model';
 
@@ -62,7 +64,11 @@ export class CityListComponent implements OnInit {
 	}
 
 	onFavourite(id: number, index: number): void {
-		this.cityList[index].favourite = true;
+		let cloneListCities:Array<City> = _.cloneDeep(this.cityList);
+		_.forEach(cloneListCities, (city) => {
+			city.favourite = city.id === id ? true : false;
+		})
+		this.cityList = cloneListCities;
 		this.detectChanges();
 	}
 
