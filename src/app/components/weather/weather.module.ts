@@ -9,6 +9,7 @@ import { PaintCityDirective } from './directives/paint-city/paint-city.directive
 import { ShowWindComponent } from './city-list/show-wind/show-wind.component';
 import { ArrowDirectionDirective } from './directives/arrow-direction/arrow-direction.directive';
 import { ShowIconComponent } from './city-list/show-icon/show-icon.component';
+import { CustomIfDirective } from './directives/custom-if/custom-if.directive';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ShowIconComponent } from './city-list/show-icon/show-icon.component';
     PaintCityDirective,
     ShowWindComponent,
     ArrowDirectionDirective,
-    ShowIconComponent
+    ShowIconComponent,
+    CustomIfDirective
   ],
   imports: [
     CommonModule

@@ -1,10 +1,10 @@
 <div class="row" [paintCity]="cityWeather.main.temp">
 	<div class="col-md-1">
 		<button (click)="deleteCity()">del</button>
-		<button *ngIf="!cityWeather.favourite" (click)="markFafourite()">*</button>
+		<button *customIf="!cityWeather.favourite" (click)="markFafourite()">*</button>
 	</div>
 	<div class="col-md-2">
-		<span *ngIf="cityWeather.favourite">*</span>
+		<span *customIf="cityWeather.favourite">*</span>
 		<span>{{cityWeather.name | uppercase}}</span>
 	</div>
 	<div class="col-md-3">
