@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import * as _ from 'lodash';
 
@@ -15,6 +16,7 @@ import { Coords } from './../coords.model';
 export class CityListComponent implements OnInit {
 	cityList: Array<City>;
 	coords: Coords;
+	weatherSubject: BehaviorSubject<Array<City>> = new BehaviorSubject(this.cityList);
 
 	constructor(private ref: ChangeDetectorRef) { }
 
@@ -33,6 +35,21 @@ export class CityListComponent implements OnInit {
 			});
 		};
 
+		const observerA = {
+			next: data => {
+				vm.cityList = data;
+				vm.detectChanges();
+			},
+			error: err => {
+				console.log(`Error: ${err}`);
+			},
+			complete: () => {
+				console.log(`Completed A`);
+			},
+		};
+
+		vm.weatherSubject.subscribe(observerA);
+
 		let getMyPosition = (position:Position) => {
 			vm.coords = {
 				lat: position.coords.latitude,
@@ -49,8 +66,7 @@ export class CityListComponent implements OnInit {
 
 				cityListPromise
 					.then(data => {
-						vm.cityList = data;
-						vm.detectChanges();
+						vm.weatherSubject.next(data);
 					})
 			}
 
@@ -68,13 +84,13 @@ export class CityListComponent implements OnInit {
 		_.forEach(cloneListCities, (city) => {
 			city.favourite = city.id === id ? true : false;
 		})
-		this.cityList = cloneListCities;
-		this.detectChanges();
+		this.weatherSubject.next(cloneListCities);
 	}
 
 	onDeleteCity(id: number, index: number): void {
-		this.cityList.splice(index, 1);
-		this.detectChanges();
+		let cloneListCities:Array<City> = _.cloneDeep(this.cityList);
+		cloneListCities.splice(index, 1);
+		this.weatherSubject.next(cloneListCities);
 	}
 
 	detectChanges() {
