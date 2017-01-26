@@ -14,9 +14,10 @@ import { Coords } from './../coords.model';
 	styleUrls: ['./city-list.component.css']
 })
 export class CityListComponent implements OnInit {
-	cityList: Array<City>;
+	cityList: Array<City> = [];
 	coords: Coords;
 	weatherSubject: BehaviorSubject<Array<City>>;
+	weatherSubject2: BehaviorSubject<Array<City>>;
 	weatherStream: Observable<Array<City>>;
 
 	constructor(private ref: ChangeDetectorRef) { }
@@ -27,30 +28,43 @@ export class CityListComponent implements OnInit {
 
 		let vm = this;
 
-		vm.weatherSubject = new BehaviorSubject(this.cityList);
-		vm.weatherStream = vm.weatherSubject
+		vm.weatherSubject = new BehaviorSubject([]);
+		vm.weatherSubject2 = new BehaviorSubject([]);
+
+		vm.weatherStream = Observable.merge(vm.weatherSubject, vm.weatherSubject2)
 			.flatMap(cityList => {
-				//throw error for demonstration flatMap
-				if (cityList) {
-					if (cityList.length < 3) {
-						return Observable.throw('Repeated 2 times and quit');
-					} else {
-						vm.cityList = [];
-						return Observable.from(cityList);
-					}
+				if (cityList.length > 0 && cityList.length < 3) {
+					return Observable.throw('Repeated 2 times and quit');
 				} else {
-					return Observable.from([]);
+					return Observable.from(cityList);
 				}
 			})
 			//retry 2 times on error
 			.retry(2)
 			.do(city => {
-				city.main.temp = city.main.temp + KELVIN_CELSIY_DIFFERENCE;
+				if (!city.main.celsiy) {
+					city.main.temp = city.main.temp + KELVIN_CELSIY_DIFFERENCE;
+					city.main.celsiy = true;
+				}
 				return city
 			})
 			.filter(city => city.main.temp < 30)
 			.share()
 			.observeOn(Scheduler.async);
+
+		const observerA = {
+			next: city => {
+				vm.cityList.push(city);
+				vm.detectChanges();
+			},
+			error: err => {
+				console.log(`Error: ${err}`);
+			},
+			complete: () => {
+				console.log(`Completed A`);
+			},
+		};
+		vm.weatherStream.subscribe(observerA);	
 
 		// todo move to service
 		let loadWeather = (url:string):Promise<Array<City>> => {
@@ -62,23 +76,6 @@ export class CityListComponent implements OnInit {
 			});
 		};
 
-		const observerA = {
-			next: city => {
-				if (vm.cityList) {
-					vm.cityList.push(city);
-					vm.detectChanges();
-				}
-			},
-			error: err => {
-				console.log(`Error: ${err}`);
-			},
-			complete: () => {
-				console.log(`Completed A`);
-			},
-		};
-
-		vm.weatherStream.subscribe(observerA);
-
 		let getMyPosition = (position:Position) => {
 			vm.coords = {
 				lat: position.coords.latitude,
@@ -86,7 +83,10 @@ export class CityListComponent implements OnInit {
 			};
 
 			let URL:string = 'http://api.openweathermap.org/data/2.5/find?lat=' + vm.coords.lat + '&lon=' +
-				vm.coords.lon + '&cnt=10&appid=' + API_WEATHER_KEY;
+				vm.coords.lon + '&cnt=5&appid=' + API_WEATHER_KEY;
+
+			let URL2:string = 'http://api.openweathermap.org/data/2.5/find?lat=40.7142700&lon=-74.0059700' + 
+				'&cnt=5&appid=' + API_WEATHER_KEY;				
 
 			vm.ref.detach();
 
@@ -94,12 +94,26 @@ export class CityListComponent implements OnInit {
 				let cityListPromise:Promise<Array<City>> = loadWeather(URL);
 
 				cityListPromise
-					.then(data => {
-						vm.weatherSubject.next(data);
-					})
+					.then(data => vm.weatherSubject.next(data));
 			};
 
-			getWeather();
+			let getWeather2 = () => {
+				let cityListPromise:Promise<Array<City>> = loadWeather(URL2);
+
+				cityListPromise
+					.then(data => vm.weatherSubject2.next(data));
+			};
+
+			setTimeout(() => {
+				getWeather();
+			}, 1000);
+
+			setTimeout(() => {
+				getWeather2();
+				setInterval(() => {
+					getWeather2();
+				}, 30000);
+			}, 11000);
 
 			setInterval(() => {
 				getWeather();
@@ -113,12 +127,14 @@ export class CityListComponent implements OnInit {
 		_.forEach(cloneListCities, (city) => {
 			city.favourite = city.id === id ? true : false;
 		});
+		this.cityList = [];
 		this.weatherSubject.next(cloneListCities);
 	}
 
 	onDeleteCity(id: number, index: number): void {
 		let cloneListCities:Array<City> = _.cloneDeep(this.cityList);
 		cloneListCities.splice(index, 1);
+		this.cityList = [];
 		this.weatherSubject.next(cloneListCities);
 	}
 
