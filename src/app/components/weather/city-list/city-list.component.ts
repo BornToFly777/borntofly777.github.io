@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Scheduler } from 'rxjs';
 
 import * as _ from 'lodash';
 
@@ -49,7 +49,8 @@ export class CityListComponent implements OnInit {
 				return city
 			})
 			.filter(city => city.main.temp < 30)
-			.share();
+			.share()
+			.observeOn(Scheduler.async);
 
 		// todo move to service
 		let loadWeather = (url:string):Promise<Array<City>> => {
