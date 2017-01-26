@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import * as _ from 'lodash';
 
@@ -16,14 +16,40 @@ import { Coords } from './../coords.model';
 export class CityListComponent implements OnInit {
 	cityList: Array<City>;
 	coords: Coords;
-	weatherSubject: BehaviorSubject<Array<City>> = new BehaviorSubject(this.cityList);
+	weatherSubject: BehaviorSubject<Array<City>>;
+	weatherStream: Observable<Array<City>>;
 
 	constructor(private ref: ChangeDetectorRef) { }
 
 	ngOnInit() {
 		const API_WEATHER_KEY = 'f9ddf31de1f2a7aafa162e68b9ffc586';
+		const KELVIN_CELSIY_DIFFERENCE = -273.15;
 
 		let vm = this;
+
+		vm.weatherSubject = new BehaviorSubject(this.cityList);
+		vm.weatherStream = vm.weatherSubject
+			.flatMap(cityList => {
+				//throw error for demonstration flatMap
+				if (cityList) {
+					if (cityList.length < 3) {
+						return Observable.throw('Repeated 2 times and quit');
+					} else {
+						vm.cityList = [];
+						return Observable.from(cityList);
+					}
+				} else {
+					return Observable.from([]);
+				}
+			})
+			//retry 2 times on error
+			.retry(2)
+			.do(city => {
+				city.main.temp = city.main.temp + KELVIN_CELSIY_DIFFERENCE;
+				return city
+			})
+			.filter(city => city.main.temp < 30)
+			.share();
 
 		// todo move to service
 		let loadWeather = (url:string):Promise<Array<City>> => {
@@ -36,9 +62,11 @@ export class CityListComponent implements OnInit {
 		};
 
 		const observerA = {
-			next: data => {
-				vm.cityList = data;
-				vm.detectChanges();
+			next: city => {
+				if (vm.cityList) {
+					vm.cityList.push(city);
+					vm.detectChanges();
+				}
 			},
 			error: err => {
 				console.log(`Error: ${err}`);
@@ -48,13 +76,13 @@ export class CityListComponent implements OnInit {
 			},
 		};
 
-		vm.weatherSubject.subscribe(observerA);
+		vm.weatherStream.subscribe(observerA);
 
 		let getMyPosition = (position:Position) => {
 			vm.coords = {
 				lat: position.coords.latitude,
 				lon: position.coords.longitude
-			}
+			};
 
 			let URL:string = 'http://api.openweathermap.org/data/2.5/find?lat=' + vm.coords.lat + '&lon=' +
 				vm.coords.lon + '&cnt=10&appid=' + API_WEATHER_KEY;
@@ -68,7 +96,7 @@ export class CityListComponent implements OnInit {
 					.then(data => {
 						vm.weatherSubject.next(data);
 					})
-			}
+			};
 
 			getWeather();
 
@@ -83,7 +111,7 @@ export class CityListComponent implements OnInit {
 		let cloneListCities:Array<City> = _.cloneDeep(this.cityList);
 		_.forEach(cloneListCities, (city) => {
 			city.favourite = city.id === id ? true : false;
-		})
+		});
 		this.weatherSubject.next(cloneListCities);
 	}
 

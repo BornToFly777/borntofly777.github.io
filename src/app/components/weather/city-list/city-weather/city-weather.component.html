@@ -10,7 +10,7 @@
 	<div class="col-md-3">
 		(lat: {{cityWeather.coord.lat | number : '.6-6'}}, lon:{{cityWeather.coord.lon | number : '.6-6'}})
 	</div>
-	<div class="col-md-1">{{cityWeather.main.temp | temperatureConverter | number : '.2-2'}}&#176;C</div>
+	<div class="col-md-1">{{cityWeather.main.temp | number : '.2-2'}}&#176;C</div>
 	<div class="col-md-1">
 		<app-show-icon [weatherDescription]="cityWeather.weather[0]"></app-show-icon>
 	</div>
