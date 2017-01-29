@@ -6,7 +6,8 @@ import * as _ from 'lodash';
 import { City } from '../../models/city.model';
 import { Coords } from '../../models/coords.model';
 
-import { LoggerService } from '../../core/services//logger/logger.service';
+import { LoggerService } from '../../core/services/logger/logger.service';
+import { LocationService } from '../../core/services/location/location.service';
 
 @Component({
 	selector: 'app-city-list',
@@ -16,9 +17,12 @@ import { LoggerService } from '../../core/services//logger/logger.service';
 })
 export class CityListComponent implements OnInit {
 	cityList: Array<City>;
-	coords: Coords;
 
-	constructor(private ref: ChangeDetectorRef, private loggerService: LoggerService) { }
+	constructor(
+		private ref: ChangeDetectorRef, 
+		private loggerService: LoggerService,
+		private locationService: LocationService
+	) { }
 
 	ngOnInit() {
 		const API_WEATHER_KEY = 'f9ddf31de1f2a7aafa162e68b9ffc586';
@@ -35,14 +39,9 @@ export class CityListComponent implements OnInit {
 			});
 		};
 
-		let getMyPosition = (position:Position) => {
-			vm.coords = {
-				lat: position.coords.latitude,
-				lon: position.coords.longitude
-			}
-
-			let URL:string = 'http://api.openweathermap.org/data/2.5/find?lat=' + vm.coords.lat + '&lon=' +
-				vm.coords.lon + '&cnt=10&appid=' + API_WEATHER_KEY;
+		vm.locationService.getCoords().then(coords => {
+			let URL:string = 'http://api.openweathermap.org/data/2.5/find?lat=' + coords.lat + '&lon=' +
+				coords.lon + '&cnt=10&appid=' + API_WEATHER_KEY;
 
 			vm.ref.detach();
 
@@ -61,8 +60,7 @@ export class CityListComponent implements OnInit {
 			setInterval(() => {
 				getWeather();
 			}, 30000);
-		};
-		navigator.geolocation.getCurrentPosition(getMyPosition);
+		});
 	}
 
 	onFavourite(id: number, index: number): void {

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+import { LocationService } from '../../core/services/location/location.service';
+
+import { Coords } from '../../models/coords.model';
+
 @Component({
 	selector: 'app-google-map',
 	templateUrl: './google-map.component.html',
@@ -9,16 +13,15 @@ export class GoogleMapComponent implements OnInit {
 	latitude: number;
 	longitude: number;
 
-	constructor() { }
+	constructor(private locationService: LocationService) { }
 
 	ngOnInit() {
 		let vm = this;
 
-		let getMyPosition = (position:Position) => {
-			vm.latitude = position.coords.latitude,
-			vm.longitude = position.coords.longitude;
-		};
-		navigator.geolocation.getCurrentPosition(getMyPosition);
+		vm.locationService.getCoords().then(coords => {
+			vm.latitude = coords.lat;
+			vm.longitude = coords.lon;
+		});
 	}
 
 }

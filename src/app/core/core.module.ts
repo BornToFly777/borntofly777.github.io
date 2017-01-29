@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { LoggerService } from './services/logger/logger.service';
+import { LocationService } from './services/location/location.service';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { LoggerService } from './services/logger/logger.service';
     HttpModule,
   ],
   providers: [
-    LoggerService
+    LoggerService,
+    LocationService
   ],
   exports: [
   ]
