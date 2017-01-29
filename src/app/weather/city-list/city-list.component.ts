@@ -33,7 +33,10 @@ export class CityListComponent implements OnInit {
 			vm.weatherService.getWeather().then(data => {
 				vm.ref.detach();
 				vm.cityList = data;
+				vm.loggerService.log('New weather have been loaded');
 				vm.detectChanges();
+			}, error => {
+				this.loggerService.log('Something got wrong while fetching weather, wait for 30 seconds for another attempt');
 			});
 		}
 
@@ -58,6 +61,7 @@ export class CityListComponent implements OnInit {
 	}
 
 	onDeleteCity(id: number, index: number): void {
+		this.loggerService.log('You have deleted ' + this.cityList[index].name + ' from list');
 		this.cityList.splice(index, 1);
 		this.detectChanges();
 	}
