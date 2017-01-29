@@ -8,6 +8,7 @@ import { Coords } from '../../models/coords.model';
 
 import { LoggerService } from '../../core/services/logger/logger.service';
 import { LocationService } from '../../core/services/location/location.service';
+import { WeatherService } from '../../core/services/weather/weather.service';
 
 @Component({
 	selector: 'app-city-list',
@@ -21,46 +22,27 @@ export class CityListComponent implements OnInit {
 	constructor(
 		private ref: ChangeDetectorRef, 
 		private loggerService: LoggerService,
-		private locationService: LocationService
+		private locationService: LocationService,
+		private weatherService: WeatherService
 	) { }
 
 	ngOnInit() {
-		const API_WEATHER_KEY = 'f9ddf31de1f2a7aafa162e68b9ffc586';
-
 		let vm = this;
 
-		// todo move to service
-		let loadWeather = (url:string):Promise<Array<City>> => {
-			return new Promise<Array<City>>((resolve, reject) => {
-				fetch(url)
-					.then(response => response.json())
-					.then(body => resolve(body.list))
-					.catch(error => reject(error))
+		let getWeather = () => {
+			vm.weatherService.getWeather().then(data => {
+				vm.ref.detach();
+				vm.cityList = data;
+				vm.detectChanges();
 			});
-		};
+		}
 
-		vm.locationService.getCoords().then(coords => {
-			let URL:string = 'http://api.openweathermap.org/data/2.5/find?lat=' + coords.lat + '&lon=' +
-				coords.lon + '&cnt=10&appid=' + API_WEATHER_KEY;
+		getWeather();
 
-			vm.ref.detach();
-
-			let getWeather = () => {
-				let cityListPromise:Promise<Array<City>> = loadWeather(URL);
-
-				cityListPromise
-					.then(data => {
-						vm.cityList = data;
-						vm.detectChanges();
-					})
-			}
-
+		setInterval(() => {
 			getWeather();
+		}, 30000);
 
-			setInterval(() => {
-				getWeather();
-			}, 30000);
-		});
 	}
 
 	onFavourite(id: number, index: number): void {

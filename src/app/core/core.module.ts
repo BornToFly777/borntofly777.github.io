@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { LoggerService } from './services/logger/logger.service';
 import { LocationService } from './services/location/location.service';
+import { WeatherService } from './services/weather/weather.service';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { LocationService } from './services/location/location.service';
   ],
   providers: [
     LoggerService,
-    LocationService
+    LocationService,
+    WeatherService
   ],
   exports: [
   ]
