@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
 
 import { CityListComponent } from './city-list/city-list.component';
 import { CityWeatherComponent } from './city-list/city-weather/city-weather.component';
@@ -9,7 +9,6 @@ import { PaintCityDirective } from './directives/paint-city/paint-city.directive
 import { ShowWindComponent } from './city-list/show-wind/show-wind.component';
 import { ArrowDirectionDirective } from './directives/arrow-direction/arrow-direction.directive';
 import { ShowIconComponent } from './city-list/show-icon/show-icon.component';
-import { CustomIfDirective } from './directives/custom-if/custom-if.directive';
 
 @NgModule({
   declarations: [
@@ -20,11 +19,10 @@ import { CustomIfDirective } from './directives/custom-if/custom-if.directive';
     PaintCityDirective,
     ShowWindComponent,
     ArrowDirectionDirective,
-    ShowIconComponent,
-    CustomIfDirective
+    ShowIconComponent
   ],
   imports: [
-    CommonModule
+    SharedModule
   ],
   providers: [
   ],

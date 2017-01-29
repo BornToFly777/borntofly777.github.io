@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import { GoogleMapComponent } from './google-map/google-map.component';
@@ -9,7 +9,7 @@ import { GoogleMapComponent } from './google-map/google-map.component';
     GoogleMapComponent
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBDOTuEovqWOhDmy2ClQvwXXMni-NLHUwI'
     })
