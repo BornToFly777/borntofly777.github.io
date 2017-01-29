@@ -3,8 +3,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 import * as _ from 'lodash';
 
-import { City } from './../city.model';
-import { Coords } from './../coords.model';
+import { City } from '../../models/city.model';
+import { Coords } from '../../models/coords.model';
 
 @Component({
 	selector: 'app-city-list',

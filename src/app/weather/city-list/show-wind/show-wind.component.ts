@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Wind } from './../../wind.model';
+import { Wind } from '../../../models/wind.model';
 
 @Component({
   selector: 'app-show-wind',

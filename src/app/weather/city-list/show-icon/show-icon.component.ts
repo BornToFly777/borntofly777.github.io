@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Weather } from './../../weather.model';
+import { Weather } from '../../../models/weather.model';
 
 @Component({
   selector: 'app-show-icon',

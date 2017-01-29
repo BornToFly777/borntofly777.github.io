@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ChangeDetectionStrategy } from '@angular/core';
 
-import { City } from './../../city.model';
+import { City } from '../../../models/city.model';
 
 @Component({
   selector: 'app-city-weather',
