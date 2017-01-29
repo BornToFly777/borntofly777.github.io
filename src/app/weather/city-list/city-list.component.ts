@@ -6,6 +6,8 @@ import * as _ from 'lodash';
 import { City } from '../../models/city.model';
 import { Coords } from '../../models/coords.model';
 
+import { LoggerService } from '../../core/services//logger/logger.service';
+
 @Component({
 	selector: 'app-city-list',
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,7 +18,7 @@ export class CityListComponent implements OnInit {
 	cityList: Array<City>;
 	coords: Coords;
 
-	constructor(private ref: ChangeDetectorRef) { }
+	constructor(private ref: ChangeDetectorRef, private loggerService: LoggerService) { }
 
 	ngOnInit() {
 		const API_WEATHER_KEY = 'f9ddf31de1f2a7aafa162e68b9ffc586';
@@ -67,6 +69,9 @@ export class CityListComponent implements OnInit {
 		let cloneListCities:Array<City> = _.cloneDeep(this.cityList);
 		_.forEach(cloneListCities, (city) => {
 			city.favourite = city.id === id ? true : false;
+			if (city.favourite) {
+				this.loggerService.log('Your favourite city now is ' + city.name);
+			}
 		})
 		this.cityList = cloneListCities;
 		this.detectChanges();

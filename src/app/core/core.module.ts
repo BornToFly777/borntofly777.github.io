@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { LoggerService } from './services/logger/logger.service';
+
 @NgModule({
   declarations: [
   ],
@@ -12,6 +14,7 @@ import { HttpModule } from '@angular/http';
     HttpModule,
   ],
   providers: [
+    LoggerService
   ],
   exports: [
   ]
