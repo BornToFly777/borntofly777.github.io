@@ -5,8 +5,8 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 
-import { WeatherModule } from './components/weather/weather.module';
-import { GoogleMapsModule } from './components/maps/googleMaps.module';
+import { WeatherModule } from './weather/weather.module';
+import { GoogleMapsModule } from './maps/googleMaps.module';
 
 @NgModule({
   declarations: [
