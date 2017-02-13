@@ -27,14 +27,12 @@ export class CityListComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		let vm = this;
-
 		let getWeather = () => {
-			vm.weatherService.getWeather().then(data => {
-				vm.ref.detach();
-				vm.cityList = data;
-				vm.loggerService.log('New weather have been loaded');
-				vm.detectChanges();
+			this.weatherService.getWeather().then(data => {
+				this.ref.detach();
+				this.cityList = data;
+				this.loggerService.log('New weather have been loaded');
+				this.detectChanges();
 			}, error => {
 				this.loggerService.log('Something got wrong while fetching weather, wait for 30 seconds for another attempt');
 			});

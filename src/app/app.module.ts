@@ -7,6 +7,10 @@ import { AppComponent } from './app.component';
 
 import { CoreModule } from './core/core.module';
 
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { reducer } from './reducers';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -14,7 +18,8 @@ import { CoreModule } from './core/core.module';
   imports: [
     CoreModule,
     WeatherModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    StoreModule.provideStore(reducer)
   ],
   providers: [],
   bootstrap: [AppComponent]

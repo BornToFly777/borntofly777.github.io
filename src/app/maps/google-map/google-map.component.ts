@@ -16,11 +16,9 @@ export class GoogleMapComponent implements OnInit {
 	constructor(private locationService: LocationService) { }
 
 	ngOnInit() {
-		let vm = this;
-
-		vm.locationService.getCoords().then(coords => {
-			vm.latitude = coords.lat;
-			vm.longitude = coords.lon;
+		this.locationService.getCoords().then(coords => {
+			this.latitude = coords.lat;
+			this.longitude = coords.lon;
 		});
 	}
 
