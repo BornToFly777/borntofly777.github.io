@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 import { Injectable } from '@angular/core';
 
 import { LocationService } from '../location/location.service';
@@ -9,10 +11,10 @@ export class WeatherService {
 
 	constructor(private locationService: LocationService) { }
 
-	getWeather(): Promise<Array<City>> {
+	getWeather(): Observable<any> {
 		const API_WEATHER_KEY = 'f9ddf31de1f2a7aafa162e68b9ffc586';
 
-		return new Promise<Array<City>>((resolve, reject) => {
+		const p = new Promise<Array<City>>((resolve, reject) => {
 			this.locationService.getCoords().then(coords => {
 				let URL:string = 'http://api.openweathermap.org/data/2.5/find?lat=' + coords.lat + '&lon=' +
 					coords.lon + '&cnt=10&appid=' + API_WEATHER_KEY;
@@ -24,6 +26,8 @@ export class WeatherService {
 			});
 
 		});
+
+		return Observable.fromPromise(p);
 	}
 
 }

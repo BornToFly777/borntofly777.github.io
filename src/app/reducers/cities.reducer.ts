@@ -4,10 +4,8 @@ import {CitiesState, initialCitiesState} from '../states/cities.state';
 
 export default function (state = initialCitiesState, action: CitiesActions.Actions): CitiesState {
   switch (action.type) {
-    case CitiesActions.ActionTypes.LOAD: {
-      const {cities} = state;
-
-      return Object.assign({}, state, {cities: []});
+    case CitiesActions.ActionTypes.SETUP_CITIES: {
+      return Object.assign({}, state, {cities: action.payload});
     }
     case CitiesActions.ActionTypes.DELETE: {
       const {cities} = state;

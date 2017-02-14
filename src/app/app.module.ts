@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { reducer } from './reducers';
+import { CitiesEffects } from './effects/cities.effects';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { reducer } from './reducers';
     CoreModule,
     WeatherModule,
     GoogleMapsModule,
-    StoreModule.provideStore(reducer)
+    StoreModule.provideStore(reducer),
+    EffectsModule.run(CitiesEffects)
   ],
   providers: [],
   bootstrap: [AppComponent]

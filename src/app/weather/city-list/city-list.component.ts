@@ -6,7 +6,12 @@ import { City } from '../../models/city.model';
 import { Coords } from '../../models/coords.model';
 
 import { LoggerService } from '../../core/services/logger/logger.service';
-import { WeatherService } from '../../core/services/weather/weather.service';
+
+import { Store } from '@ngrx/store';
+import * as CitiesActions from '../../actions/cities.actions';
+import { InitialState } from '../../states';
+import { CitiesState } from '../../states/cities.state';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-city-list',
@@ -14,22 +19,34 @@ import { WeatherService } from '../../core/services/weather/weather.service';
 	styleUrls: ['./city-list.component.css']
 })
 export class CityListComponent implements OnInit {
-	cityList: Array<City>;
+	private subscription: Subscription;
+	private cityList: Array<City>;
 
 	constructor(
-		private loggerService: LoggerService,
-		private weatherService: WeatherService
+		private store: Store<InitialState>,
+		private loggerService: LoggerService
 	) { }
 
 	ngOnInit() {
+		//let getWeather = () => {
+		//	this.weatherService.getWeather().then(data => {
+		//		this.cityList = data;
+		//		this.loggerService.log('New weather have been loaded');
+		//	}, error => {
+		//		this.loggerService.log('Something got wrong while fetching weather, wait for 30 seconds for another attempt');
+		//	});
+		//}
+		//
+
+		this.subscription = this.store
+				.select((s: InitialState) => s.cities)
+				.subscribe(({cities}: CitiesState): void => {
+					this.cityList = cities;
+				});
+
 		let getWeather = () => {
-			this.weatherService.getWeather().then(data => {
-				this.cityList = data;
-				this.loggerService.log('New weather have been loaded');
-			}, error => {
-				this.loggerService.log('Something got wrong while fetching weather, wait for 30 seconds for another attempt');
-			});
-		}
+			this.store.dispatch(new CitiesActions.LoadAction([]));
+		};
 
 		getWeather();
 
