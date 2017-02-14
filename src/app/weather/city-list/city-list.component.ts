@@ -28,16 +28,6 @@ export class CityListComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		//let getWeather = () => {
-		//	this.weatherService.getWeather().then(data => {
-		//		this.cityList = data;
-		//		this.loggerService.log('New weather have been loaded');
-		//	}, error => {
-		//		this.loggerService.log('Something got wrong while fetching weather, wait for 30 seconds for another attempt');
-		//	});
-		//}
-		//
-
 		this.subscription = this.store
 				.select((s: InitialState) => s.cities)
 				.subscribe(({cities}: CitiesState): void => {

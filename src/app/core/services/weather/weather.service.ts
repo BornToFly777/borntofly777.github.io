@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 
+import { LoggerService } from '../logger/logger.service';
 import { LocationService } from '../location/location.service';
 
 import { City } from '../../../models/city.model';
@@ -9,7 +10,10 @@ import { City } from '../../../models/city.model';
 @Injectable()
 export class WeatherService {
 
-	constructor(private locationService: LocationService) { }
+	constructor(
+		private locationService: LocationService,
+		private loggerService: LoggerService
+	) { }
 
 	getWeather(): Observable<any> {
 		const API_WEATHER_KEY = 'f9ddf31de1f2a7aafa162e68b9ffc586';
@@ -21,8 +25,11 @@ export class WeatherService {
 
 				fetch(URL)
 					.then(response => response.json())
-					.then(body => resolve(body.list))
-					.catch(error => reject(error))
+					.then(body => {
+						resolve(body.list);
+						this.loggerService.log('New weather have been loaded');
+					})
+					.catch(() => this.loggerService.log('Something got wrong while fetching weather, wait for 30 seconds for another attempt'))
 			});
 
 		});

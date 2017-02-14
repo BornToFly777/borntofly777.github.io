@@ -14,6 +14,5 @@ export class CitiesEffects {
 		.map(action => action.payload)
 		.switchMap(() => this.weatherService.getWeather()
 			.map(res => (new CitiesActions.SetupAction(res)))
-			.catch(() => Observable.of({type: 'LOAD_FAILED'}))
 		);
 }
