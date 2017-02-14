@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import * as _ from 'lodash';
-
 import { City } from '../../models/city.model';
-import { Coords } from '../../models/coords.model';
 
 import { LoggerService } from '../../core/services/logger/logger.service';
 
