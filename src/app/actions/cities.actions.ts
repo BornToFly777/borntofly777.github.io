@@ -25,14 +25,14 @@ export class LoadAction implements Action {
 export class DeleteAction implements Action {
   type = ActionTypes.DELETE;
 
-  constructor(public payload: Array<City>) {
+  constructor(public payload: number) {
   }
 }
 
 export class FavouriteAction implements Action {
   type = ActionTypes.FAVOURITE;
 
-  constructor(public payload: Array<City>) {
+  constructor(public payload: number) {
   }
 }
 

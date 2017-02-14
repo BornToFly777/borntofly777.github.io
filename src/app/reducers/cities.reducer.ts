@@ -1,5 +1,9 @@
 import * as CitiesActions from '../actions/cities.actions';
 
+import * as _ from 'lodash';
+
+import { City } from '../models/city.model';
+
 import {CitiesState, initialCitiesState} from '../states/cities.state';
 
 export default function (state = initialCitiesState, action: CitiesActions.Actions): CitiesState {
@@ -10,12 +14,19 @@ export default function (state = initialCitiesState, action: CitiesActions.Actio
     case CitiesActions.ActionTypes.DELETE: {
       const {cities} = state;
 
-      return Object.assign({}, state, {cities: []});
+      let cloneListCities:Array<City> = _.filter(cities, (city) => { return city.id !== action.payload});
+
+      return Object.assign({}, state, {cities: cloneListCities});
     }
     case CitiesActions.ActionTypes.FAVOURITE: {
       const {cities} = state;
 
-      return Object.assign({}, state, {cities: []});
+      let cloneListCities:Array<City> = _.cloneDeep(cities);
+      _.forEach(cloneListCities, (city) => {
+        city.favourite = city.id === action.payload ? true : false;
+      })
+
+      return Object.assign({}, state, {cities: cloneListCities});
     }
     default:
       return state;

@@ -47,19 +47,13 @@ export class CityListComponent implements OnInit {
 	}
 
 	onFavourite(id: number, index: number): void {
-		let cloneListCities:Array<City> = _.cloneDeep(this.cityList);
-		_.forEach(cloneListCities, (city) => {
-			city.favourite = city.id === id ? true : false;
-			if (city.favourite) {
-				this.loggerService.log('Your favourite city now is ' + city.name);
-			}
-		})
-		this.cityList = cloneListCities;
+		this.loggerService.log('Your favourite city now is ' + this.cityList[index].name);
+		this.store.dispatch(new CitiesActions.FavouriteAction(id));
 	}
 
 	onDeleteCity(id: number, index: number): void {
 		this.loggerService.log('You have deleted ' + this.cityList[index].name + ' from list');
-		this.cityList.splice(index, 1);
+		this.store.dispatch(new CitiesActions.DeleteAction(id));
 	}
 
 }
