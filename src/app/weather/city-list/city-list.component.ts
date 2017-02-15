@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { City } from '../../models/city.model';
+import { FormSettings } from '../../models/form.settings.model';
 
 import { LoggerService } from '../../core/services/logger/logger.service';
 
@@ -8,6 +9,7 @@ import { Store } from '@ngrx/store';
 import * as CitiesActions from '../../actions/cities.actions';
 import { InitialState } from '../../states';
 import { CitiesState } from '../../states/cities.state';
+import { FormSettingsState } from '../../states/form.settings.state';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,7 +19,9 @@ import { Subscription } from 'rxjs';
 })
 export class CityListComponent implements OnInit {
 	private subscription: Subscription;
+	private subscription2: Subscription;
 	private cityList: Array<City>;
+	private formSettings: FormSettings;
 
 	constructor(
 		private store: Store<InitialState>,
@@ -31,6 +35,12 @@ export class CityListComponent implements OnInit {
 					this.cityList = cities;
 				});
 
+		this.subscription2 = this.store
+				.select((s: InitialState) => s.formSettings)
+				.subscribe(({formSettings}: FormSettingsState): void => {
+					this.formSettings = formSettings;
+				});
+
 		let getWeather = () => {
 			this.store.dispatch(new CitiesActions.LoadAction([]));
 		};
@@ -40,7 +50,6 @@ export class CityListComponent implements OnInit {
 		setInterval(() => {
 			getWeather();
 		}, 30000);
-
 	}
 
 	onFavourite(id: number, index: number): void {

@@ -1,6 +1,6 @@
 <div class="row" [paintCity]="cityWeather.main.temp">
 	<div class="col-md-1">
-		<button (click)="deleteCity()">del</button>
+		<button (click)="deleteCity()" *customIf="settings.canDelete">del</button>
 		<button *customIf="!cityWeather.favourite" (click)="markFafourite()">*</button>
 	</div>
 	<div class="col-md-2">
@@ -8,13 +8,14 @@
 		<span>{{cityWeather.name | uppercase}}</span>
 	</div>
 	<div class="col-md-3">
-		(lat: {{cityWeather.coord.lat | number : '.6-6'}}, lon:{{cityWeather.coord.lon | number : '.6-6'}})
+		(lat: {{cityWeather.coord.lat | number : fractional}}, 
+		lon:{{cityWeather.coord.lon | number : fractional}})
 	</div>
 	<div class="col-md-1">{{cityWeather.main.temp | temperatureConverter | number : '.2-2'}}&#176;C</div>
 	<div class="col-md-1">
 		<app-show-icon [weatherDescription]="cityWeather.weather[0]"></app-show-icon>
 	</div>
-	<div class="col-md-1">
+	<div class="col-md-1" *customIf="settings.showWind">
 		<app-show-wind [wind]="cityWeather.wind"></app-show-wind>
 	</div>
 </div>

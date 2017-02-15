@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ChangeDetectionStrategy } from '@angular/core';
 
 import { City } from '../../../models/city.model';
+import { FormSettings } from '../../../models/form.settings.model';
 
 @Component({
   selector: 'app-city-weather',
@@ -12,6 +13,7 @@ import { City } from '../../../models/city.model';
 export class CityWeatherComponent{
 
   @Input() cityWeather: City;
+  @Input() settings: FormSettings;
   @Output() markFavouriteCity: EventEmitter<number>;
   @Output() deleteCurrentCity: EventEmitter<number>;
 
@@ -19,6 +21,8 @@ export class CityWeatherComponent{
   	this.markFavouriteCity = new EventEmitter<number>();
     this.deleteCurrentCity = new EventEmitter<number>();
   }
+
+  get fractional() { return '.' + this.settings.coordsCount + '-' + this.settings.coordsCount }
 
   markFafourite(): void {
   	this.markFavouriteCity.emit(this.cityWeather.id);
