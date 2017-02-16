@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { WeatherModule } from './weather/weather.module';
 import { GoogleMapsModule } from './maps/googleMaps.module';
+import { AdminModule } from './admin/admin.module';
 
 import { AppComponent } from './app.component';
 
@@ -20,6 +21,7 @@ import { CitiesEffects } from './effects/cities.effects';
     CoreModule,
     WeatherModule,
     GoogleMapsModule,
+    AdminModule,
     StoreModule.provideStore(reducer),
     EffectsModule.run(CitiesEffects)
   ],
