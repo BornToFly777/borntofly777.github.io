@@ -13,6 +13,7 @@ import { FormSettings } from '../../../models/form.settings.model';
 export class CityWeatherComponent{
 
   @Input() cityWeather: City;
+  @Input() index: number;
   @Input() settings: FormSettings;
   @Output() markFavouriteCity: EventEmitter<number>;
   @Output() deleteCurrentCity: EventEmitter<number>;

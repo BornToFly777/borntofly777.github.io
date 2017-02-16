@@ -13,7 +13,7 @@ import { WeatherService } from './services/weather/weather.service';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpModule
   ],
   providers: [
     LoggerService,

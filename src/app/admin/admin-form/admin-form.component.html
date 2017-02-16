@@ -1,3 +1,35 @@
-<p>
-  admin-form works!
-</p>
+<div class="container">
+	<div class="row">
+		<div class="panel panel-default col-md-3">
+			<div class="margin-20">
+				<h4>Admin form</h4>
+			</div>
+			<form [formGroup]="formGroup" (submit)="submit(formGroup)">
+				<div class="form-group">
+					<input type="checkbox" name="canDelete" formControlName="canDelete">
+					<label>Can delete cities</label>
+				</div>
+				<div class="form-group">
+					<input type="checkbox" name="showWind" formControlName="showWind">
+					<label>Show wind and direction</label>
+				</div>
+				<div class="form-group">
+					<label>Fractional part of coordinates</label>
+					<input type="number" name="coordsCount" formControlName="coordsCount">
+				</div>
+				<div class="form-group">
+					<label>Number of cities in the table</label>
+					<input type="number" name="numberOfCities" formControlName="numberOfCities">
+				</div>
+				<button 
+					type="submit" 
+					class="btn btn-primary pull-right" 
+					[disabled]="!formGroup.valid">
+					Apply
+				</button>
+			</form>
+		</div>
+	</div>  
+</div>
+
+

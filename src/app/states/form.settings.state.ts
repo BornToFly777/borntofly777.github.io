@@ -8,6 +8,7 @@ export const initialFormSettingsState: FormSettingsState = {
 	formSettings: {
 		canDelete: true,
 		showWind: true,
-		coordsCount: 6
+		coordsCount: 6,
+		numberOfCities: 10
 	}
 }

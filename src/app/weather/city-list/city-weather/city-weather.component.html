@@ -1,4 +1,4 @@
-<div class="row" [paintCity]="cityWeather.main.temp">
+<div class="row" [paintCity]="cityWeather.main.temp" *customIf="index<settings.numberOfCities">
 	<div class="col-md-1">
 		<button (click)="deleteCity()" *customIf="settings.canDelete">del</button>
 		<button *customIf="!cityWeather.favourite" (click)="markFafourite()">*</button>
