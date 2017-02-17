@@ -39,15 +39,15 @@ export class AdminFormComponent implements OnInit {
 					formSettings.coordsCount, 
 					[
 						Validators.required,
-						validateMin,
-						validateMax
+						validateMin(2),
+						validateMax(6)
 					]
 				],
 				numberOfCities: [
 					formSettings.numberOfCities,
 					[
 						Validators.required,
-						validateRange
+						validateRange(2, 10)
 					]
 				]
 			})
