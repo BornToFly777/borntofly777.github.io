@@ -9,6 +9,10 @@ import { InitialState } from '../../states';
 import { FormSettingsState } from '../../states/form.settings.state';
 import { Subscription } from 'rxjs';
 
+import { validateMin } from '../../validators/min.validator';
+import { validateMax } from '../../validators/max.validator';
+import { validateRange } from '../../validators/range.validator';
+
 @Component({
 	selector: 'app-admin-form',
 	templateUrl: './admin-form.component.html',
@@ -34,13 +38,16 @@ export class AdminFormComponent implements OnInit {
 				coordsCount: [
 					formSettings.coordsCount, 
 					[
-						Validators.required
+						Validators.required,
+						validateMin,
+						validateMax
 					]
 				],
 				numberOfCities: [
 					formSettings.numberOfCities,
 					[
-						Validators.required
+						Validators.required,
+						validateRange
 					]
 				]
 			})
