@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CustomIfDirective } from './directives/custom-if/custom-if.directive';
+import { ValidationErrorsComponent } from './components/validation-errors/validation-errors.component';
 
 @NgModule({
   declarations: [
-    CustomIfDirective
+    CustomIfDirective,
+    ValidationErrorsComponent
   ],
   imports: [
     CommonModule
@@ -14,7 +16,8 @@ import { CustomIfDirective } from './directives/custom-if/custom-if.directive';
   ],
   exports: [
     CommonModule,
-    CustomIfDirective
+    CustomIfDirective,
+    ValidationErrorsComponent
   ]
 })
 export class SharedModule { }
