@@ -35,6 +35,7 @@ export class AdminFormComponent implements OnInit {
 			this.formGroup = this.formBuilder.group({
 				canDelete: [formSettings.canDelete],
 				showWind: [formSettings.showWind],
+				temp: [formSettings.temp],
 				coordsCount: [
 					formSettings.coordsCount, 
 					[

@@ -3,4 +3,5 @@ export class FormSettings {
 	public showWind: boolean;
 	public coordsCount: number;
 	public numberOfCities: number;
+	public temp: string;
 }

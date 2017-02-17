@@ -9,6 +9,7 @@ export const initialFormSettingsState: FormSettingsState = {
 		canDelete: true,
 		showWind: true,
 		coordsCount: 6,
-		numberOfCities: 10
+		numberOfCities: 10,
+		temp: 'celsiys'
 	}
 }
