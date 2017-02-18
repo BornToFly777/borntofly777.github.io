@@ -7,4 +7,5 @@
 		(markFavouriteCity)="onFavourite($event, i)"
 		(deleteCurrentCity)="onDeleteCity($event, i)">
 	</app-city-weather>
+	<span *ngIf="!cityList.length">Wait while the data is loading</span>
 </div>
