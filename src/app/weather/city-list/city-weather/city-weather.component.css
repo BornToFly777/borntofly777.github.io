@@ -1,0 +1,8 @@
+.city-info {
+    cursor: pointer;
+    position: relative;
+}
+
+.city-info:hover {
+    left: .3em;
+}
