@@ -11,6 +11,7 @@ import { InitialState } from '../../states';
 import { CitiesState } from '../../states/cities.state';
 import { FormSettingsState } from '../../states/form.settings.state';
 import { Subscription } from 'rxjs';
+import {Router, ActivatedRoute, Params} from "@angular/router";
 
 @Component({
 	selector: 'app-city-list',
@@ -25,7 +26,9 @@ export class CityListComponent implements OnInit {
 
 	constructor(
 		private store: Store<InitialState>,
-		private loggerService: LoggerService
+		private loggerService: LoggerService,
+		private route: ActivatedRoute,
+		private router: Router
 	) { }
 
 	ngOnInit() {
@@ -60,6 +63,10 @@ export class CityListComponent implements OnInit {
 	onDeleteCity(id: number, index: number): void {
 		this.loggerService.log('You have deleted ' + this.cityList[index].name + ' from list');
 		this.store.dispatch(new CitiesActions.DeleteAction(id));
+	}
+
+	onSelect(city: City) {
+		this.router.navigate([city.id], {relativeTo: this.route});
 	}
 
 }

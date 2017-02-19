@@ -4,6 +4,7 @@
 		[cityWeather]="city"
 		[index]="i"
 		[settings]="formSettings"
+		(click)="onSelect($event, city)"
 		(markFavouriteCity)="onFavourite($event, i)"
 		(deleteCurrentCity)="onDeleteCity($event, i)">
 	</app-city-weather>

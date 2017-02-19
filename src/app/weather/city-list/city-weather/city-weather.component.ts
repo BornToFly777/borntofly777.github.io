@@ -17,10 +17,12 @@ export class CityWeatherComponent{
   @Input() settings: FormSettings;
   @Output() markFavouriteCity: EventEmitter<number>;
   @Output() deleteCurrentCity: EventEmitter<number>;
+  @Output() onSelect: EventEmitter<City>;
 
   constructor() {
   	this.markFavouriteCity = new EventEmitter<number>();
     this.deleteCurrentCity = new EventEmitter<number>();
+    this.onSelect = new EventEmitter<City>();
   }
 
   get fractional() { return '.' + this.settings.coordsCount + '-' + this.settings.coordsCount }
@@ -31,5 +33,9 @@ export class CityWeatherComponent{
 
   deleteCity(): void {
     this.deleteCurrentCity.emit(this.cityWeather.id);
+  }
+
+  onSelectCity(): void {
+    this.onSelect.emit(this.cityWeather);
   }
 }
