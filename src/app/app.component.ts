@@ -1,6 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Observable} from "rxjs";
 
 @Component({
 	selector: 'app-root',
@@ -9,12 +7,9 @@ import {Observable} from "rxjs";
 })
 export class AppComponent implements OnInit {
 
-	currentUrl$: Observable<string>;
-
-	constructor(private router: Router) {
+	constructor() {
 	}
 
 	ngOnInit(): void {
-		this.currentUrl$ = this.router.events.map(() => this.router.url);
 	}
 }
