@@ -2,6 +2,13 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router, ActivatedRoute } from "@angular/router";
 
+import * as _ from 'lodash';
+
+import { Store } from '@ngrx/store';
+import { InitialState } from '../../states';
+import { CitiesState } from '../../states/cities.state';
+import { Subscription } from 'rxjs';
+
 import { City } from '../../models/city.model';
 
 @Component({
@@ -11,56 +18,46 @@ import { City } from '../../models/city.model';
 })
 
 export class CityDetailsComponent implements OnInit {
-
+	private subscription: Subscription;
 	city: City;
-	countToError: number = 3;
+	cityList: Array<City>;
+	selectedId: number;
 
 	constructor(
+		private store: Store<InitialState>,
 		private route: ActivatedRoute,
 		private router: Router
 	) { }
 
 	ngOnInit() {
 
-		let loadWeather = (url: string): Promise<City> => {
-			return new Promise<City>((resolve, reject) => {
-				fetch(url)
-					.then(response => response.json())
-					.then(body => {
-						this.countToError--;
-						if (this.countToError > 0) {
-							resolve(body);
-						} else {
-							reject('error');
-						}
-					})
-			});
-		};
+		let refresh = () => {
+			this.city = _.find(this.cityList, {id: this.selectedId});
 
-		let getWeather = (url: string) => {
-			let cityListPromise:Promise<City> = loadWeather(url);
-
-			cityListPromise
-				.then(data => {
-					this.city = data;
-				}, error => {
-					this.router.navigate(['../'], {relativeTo: this.route});
-				})
+			if (!this.city) {
+				this.router.navigate(['../'], {relativeTo: this.route});
+			}
 		}
 
 		this.route.params
 			.subscribe((params: any) => {
-				const id = params.id;
+				this.selectedId = Number(params.id);
 
-				const API_WEATHER_KEY = 'f9ddf31de1f2a7aafa162e68b9ffc586';
-
-				const p = new Promise<Array<City>>((resolve, reject) => {
-					let URL:string = 'http://api.openweathermap.org/data/2.5/weather?id=' + id + '&appid=' + API_WEATHER_KEY;
-
-					getWeather(URL);
-
-				});
+				if (this.cityList) {
+					refresh();
+				}
 			})
+
+		this.subscription = this.store
+				.select((s: InitialState) => s.cities)
+				.subscribe(({cities}: CitiesState): void => {
+					this.cityList = cities;
+
+					if (this.selectedId) {
+						refresh();
+					}
+				});
+
 
 	}
 
