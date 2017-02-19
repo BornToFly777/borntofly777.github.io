@@ -4,7 +4,6 @@ import { CoreModule } from '../core/core.module';
 import { RouterModule, Routes } from "@angular/router";
 
 import { AdminFormComponent } from '../admin/admin-form/admin-form.component';
-import { CityListComponent } from '../weather/city-list/city-list.component';
 import { GoogleMapComponent } from '../maps/google-map/google-map.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 
@@ -12,10 +11,6 @@ const appRoutes: Routes = [
 	{
 		path: 'admin',
 		component: AdminFormComponent
-	},
-	{
-		path: 'weather',
-		component: CityListComponent
 	},
 	{
 		path: 'map',

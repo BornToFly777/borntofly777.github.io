@@ -8,4 +8,5 @@
 		(deleteCurrentCity)="onDeleteCity($event, i)">
 	</app-city-weather>
 	<span *ngIf="!cityList.length">Wait while the data is loading</span>
+	<router-outlet></router-outlet>
 </div>
