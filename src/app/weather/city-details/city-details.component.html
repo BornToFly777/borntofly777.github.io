@@ -1,3 +1,8 @@
-<p>
-  city-details works!
-</p>
+<div  *ngIf="city">
+	<p>
+		<span class="label label-default">Select {{countToError}} more cities to caught an error</span>
+	</p>
+	<h3>{{city.name}}</h3>
+</div>
+
+
