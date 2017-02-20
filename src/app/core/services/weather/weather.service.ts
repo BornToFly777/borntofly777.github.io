@@ -22,16 +22,23 @@ export class WeatherService {
 
 		const p = new Promise<Array<City>>((resolve, reject) => {
 			this.locationService.getCoords().then(coords => {
-				let URL:string = 'http://api.openweathermap.org/data/2.5/find?lat=' + coords.lat + '&lon=' +
-					coords.lon + '&cnt=10&appid=' + this.API_WEATHER_KEY;
+				const params = new URLSearchParams();
+				params.append('lat', coords.lat+'');
+				params.append('lon', coords.lon+'');
+				params.append('cnt', '10');
+				params.append('appid', this.API_WEATHER_KEY);	
 
-				fetch(URL)
-					.then(response => response.json())
-					.then(body => {
-						resolve(body.list);
-						this.loggerService.log('New weather have been loaded');
-					})
-					.catch(() => this.loggerService.log('Something got wrong while fetching weather, wait for 30 seconds for another attempt'))
+				const headers = new Headers({});
+
+				const request = new Request({
+					url: 'http://api.openweathermap.org/data/2.5/find',
+					method: RequestMethod.Get,
+					search: params,
+					headers: headers
+				});
+
+				this.http.request(request).map(response => response.json())
+					.subscribe(data => resolve(data.list))
 			});
 
 		});
