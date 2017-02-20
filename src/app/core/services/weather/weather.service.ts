@@ -40,7 +40,10 @@ export class WeatherService {
 				});
 
 				this.http.request(request).map(response => response.json())
-					.subscribe(data => resolve(data.list))
+					.subscribe(data => {
+						resolve(data.list);
+						this.loggerService.log('New weather have been loaded');
+					}, error => this.loggerService.log('Something got wrong while fetching weather, wait for 30 seconds for another attempt'))
 			});
 
 		});
