@@ -44,15 +44,14 @@ export class WeatherService {
 		params.append('id', id+'');
 		params.append('appid', this.API_WEATHER_KEY);
 
-		const headers = new Headers({
-			'Content-Type': 'application/json'
-		})
+		const headers = new Headers({});
 
 		const request = new Request({
 			url: 'http://api.openweathermap.org/data/2.5/weather',
 			method: RequestMethod.Get,
-			search: params
-		})
+			search: params,
+			headers: headers
+		});
 
 		return this.http.request(request).map(response => response.json());
 	}
