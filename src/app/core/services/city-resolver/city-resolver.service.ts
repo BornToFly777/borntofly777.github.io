@@ -14,7 +14,7 @@ export class CityResolverService implements Resolve<any> {
 
 	resolve(route: ActivatedRouteSnapshot): Observable<any> | Promise<any> | any {
 		let id = +route.params['id'];
-		return this.weatherService.getWeatherById(id).subscribe(city => {
+		return this.weatherService.getWeatherById(id).map(city => {
 			console.log('city', city);
 			if (city) {
 				return city;
@@ -22,7 +22,7 @@ export class CityResolverService implements Resolve<any> {
 				this.router.navigate(['/']);
 				return false;
 			}
-		});
+		}).first();
 	}
 
 }
