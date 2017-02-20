@@ -21,7 +21,7 @@ export class CityDetailsComponent implements OnInit {
 	ngOnInit() {
 
 		this.route.data
-			.subscribe(data => {
+			.subscribe((data: any) => {
 				this.city = data.city;
 			})
 
