@@ -23,8 +23,8 @@ export class WeatherService {
 		const p = new Promise<Array<City>>((resolve, reject) => {
 			this.locationService.getCoords().then(coords => {
 				const params = new URLSearchParams();
-				params.append('lat', coords.lat+'');
-				params.append('lon', coords.lon+'');
+				params.append('lat', `${coords.lat}`);
+				params.append('lon', `${coords.lon}`);
 				params.append('cnt', '10');
 				params.append('appid', this.API_WEATHER_KEY);	
 
@@ -48,7 +48,7 @@ export class WeatherService {
 
 	getWeatherById(id: number): Observable<any> {
 		const params = new URLSearchParams();
-		params.append('id', id+'');
+		params.append('id', `${id}`);
 		params.append('appid', this.API_WEATHER_KEY);
 
 		const headers = new Headers({});
