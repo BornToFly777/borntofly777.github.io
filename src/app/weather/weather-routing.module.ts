@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { CoreModule } from '../core/core.module';
 import { RouterModule, Routes } from "@angular/router";
+import { CityResolverService } from '../core/services/city-resolver/city-resolver.service';
 
 import { CityListComponent } from './city-list/city-list.component';
 import { WeatherWelcomeComponent } from './weather-welcome/weather-welcome.component';
@@ -14,7 +15,10 @@ const routes: Routes = [
 		children: [
 			{
 				path: ':id',
-				component: CityDetailsComponent
+				component: CityDetailsComponent,
+				resolve: {
+					city: CityResolverService
+				}
 			},
 			{
 				path: '',
