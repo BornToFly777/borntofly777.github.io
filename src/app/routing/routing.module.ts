@@ -9,17 +9,17 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
 
 const appRoutes: Routes = [
 	{
+		path: '',
+		redirectTo: 'weather',
+		pathMatch: 'full'
+	},
+	{
 		path: 'admin',
 		component: AdminFormComponent
 	},
 	{
 		path: 'map',
-		component: GoogleMapComponent
-	},
-	{
-		path: '',
-		redirectTo: 'weather',
-		pathMatch: 'full'
+		loadChildren: 'app/maps/google-maps.module#GoogleMapsModule'
 	},
 	{
 		path: '**',
