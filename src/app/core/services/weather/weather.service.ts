@@ -28,7 +28,9 @@ export class WeatherService {
 				params.append('cnt', '10');
 				params.append('appid', this.API_WEATHER_KEY);	
 
-				const headers = new Headers({});
+				const headers = new Headers({
+					'Accept': '*/*'
+				});
 
 				const request = new Request({
 					url: 'http://api.openweathermap.org/data/2.5/find',
@@ -51,7 +53,9 @@ export class WeatherService {
 		params.append('id', `${id}`);
 		params.append('appid', this.API_WEATHER_KEY);
 
-		const headers = new Headers({});
+		const headers = new Headers({
+			'Accept': '*/*'
+		});
 
 		const request = new Request({
 			url: 'http://api.openweathermap.org/data/2.5/weather',
