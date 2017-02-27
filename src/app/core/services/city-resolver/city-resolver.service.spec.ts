@@ -3,7 +3,7 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { CityResolverService } from './city-resolver.service';
 
-describe('CityResolverService', () => {
+xdescribe('CityResolverService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [CityResolverService]

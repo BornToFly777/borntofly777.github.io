@@ -2,6 +2,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { Weather } from '../../../models/weather.model';
 
 import { ShowIconComponent } from './show-icon.component';
 
@@ -19,6 +20,9 @@ describe('ShowIconComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ShowIconComponent);
     component = fixture.componentInstance;
+
+    let weather: Weather = {'id': 12, 'icon': '01n'};
+    component.weatherDescription = weather;
     fixture.detectChanges();
   });
 

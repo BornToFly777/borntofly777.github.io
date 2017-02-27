@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { WeatherWelcomeComponent } from './weather-welcome.component';
 
-describe('WeatherWelcomeComponent', () => {
+xdescribe('WeatherWelcomeComponent', () => {
   let component: WeatherWelcomeComponent;
   let fixture: ComponentFixture<WeatherWelcomeComponent>;
 

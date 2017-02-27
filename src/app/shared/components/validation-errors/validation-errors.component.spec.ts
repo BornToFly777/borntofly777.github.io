@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { ValidationErrorsComponent } from './validation-errors.component';
 
-describe('ValidationErrorsComponent', () => {
+xdescribe('ValidationErrorsComponent', () => {
   let component: ValidationErrorsComponent;
   let fixture: ComponentFixture<ValidationErrorsComponent>;
 
