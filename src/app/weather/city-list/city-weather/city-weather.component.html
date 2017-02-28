@@ -6,12 +6,9 @@
 	<div class="city-info" (click)="onSelectCity()">
 		<div class="col-md-2">
 			<span *customIf="cityWeather.favourite">*</span>
-			<span>{{cityWeather.name | uppercase}}</span>
+			<span class="city-name">{{cityWeather.name | uppercase}}</span>
 		</div>
-		<div class="col-md-3">
-			(lat: {{cityWeather.coord.lat | number : fractional}}, 
-			lon:{{cityWeather.coord.lon | number : fractional}})
-		</div>
+		<div class="col-md-3 city-coordinates">(lat: {{cityWeather.coord.lat | number : fractional}}, lon: {{cityWeather.coord.lon | number : fractional}})</div>
 		<div *customIf="settings.temp === 'celsiys'"
 			class="col-md-1">{{cityWeather.main.temp | temperatureConverter | number : '.2-2'}}&#176;C</div>
 		<div *customIf="settings.temp === 'kelvin'"

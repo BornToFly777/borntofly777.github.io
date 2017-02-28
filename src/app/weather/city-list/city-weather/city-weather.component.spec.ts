@@ -18,6 +18,7 @@ describe('CityWeatherComponent', () => {
   let component: CityWeatherComponent;
   let fixture: ComponentFixture<CityWeatherComponent>;
   let expectedCity: City;
+  let expectedSettings: FormSettings;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -61,7 +62,7 @@ describe('CityWeatherComponent', () => {
     component.cityWeather = expectedCity;
     component.index = 1;
 
-    let expectedSettings = {
+    expectedSettings = {
       canDelete: true,
       showWind: true,
       coordsCount: 4,
@@ -75,5 +76,42 @@ describe('CityWeatherComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should set city name correctly', () => {
+    let cityEl = fixture.debugElement.query(By.css('.city-name'));
+
+    expect(cityEl.nativeElement.textContent).toBe(expectedCity.name.toUpperCase());
+  });
+
+  it('should set show city coordinates correctly', () => {
+    let coordinatesEl = fixture.debugElement.query(By.css('.city-coordinates'));
+
+    expect(coordinatesEl.nativeElement.textContent).toBe('(lat: ' + expectedCity.coord.lat.toFixed(expectedSettings.coordsCount) +
+      ', lon: ' + expectedCity.coord.lon.toFixed(expectedSettings.coordsCount) + ')');
+  });
+
+  it('should emit delete event with correct id of the city', () => {
+
+    let deleteSpy = spyOn(component.deleteCurrentCity, 'emit');
+
+    component.deleteCity();
+    expect(component.deleteCurrentCity.emit).toHaveBeenCalledWith(expectedCity.id);
+  });
+
+  it('should emit favourite event with correct id of the city', () => {
+
+    let favouriteSpy = spyOn(component.markFavouriteCity, 'emit');
+
+    component.markFafourite();
+    expect(component.markFavouriteCity.emit).toHaveBeenCalledWith(expectedCity.id);
+  });
+
+  it('should provide correct selected city', () => {
+
+    let selectedSpy = spyOn(component.onSelect, 'emit');
+
+    component.onSelectCity();
+    expect(component.onSelect.emit).toHaveBeenCalledWith(expectedCity);
   });
 });
