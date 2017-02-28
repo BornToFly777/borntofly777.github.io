@@ -21,10 +21,8 @@ export default function (state = initialCitiesState, action: CitiesActions.Actio
     case CitiesActions.ActionTypes.FAVOURITE: {
       const {cities} = state;
 
-      let cloneListCities:Array<City> = _.cloneDeep(cities);
-      _.forEach(cloneListCities, (city) => {
-        city.favourite = city.id === action.payload ? true : false;
-      })
+      let cloneListCities:Array<City> = cities.map(city => city.id === action.payload ?
+        Object.assign({}, city, {favourite: true}) : Object.assign({}, city, {favourite: false}));
 
       return Object.assign({}, state, {cities: cloneListCities});
     }
